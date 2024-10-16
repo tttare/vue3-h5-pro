@@ -30,5 +30,9 @@ export function initCaptcha(): Promise<any> {
 
 
 export function register(data?: object): Promise<any> {
-  return http.request({ url: "/aeconn/user/register", method: "post" });
+  return http.request({ url: "/aeconn/user/register", method: "post" , data});
+}
+
+export function checkRegisterInfoReq(data?: object): Promise<any> {
+  return http.request({ url: "/aeconn/user/checkRegisterInfo", method: "post" , data});
 }

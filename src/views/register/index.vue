@@ -135,7 +135,13 @@
           />
         </van-field>
         <div style="margin: 16px">
-          <van-button round block type="primary" native-type="submit">
+          <van-button
+            round
+            block
+            type="primary"
+            native-type="submit"
+            :disabled="registDisable"
+          >
             注册
           </van-button>
         </div>
@@ -149,7 +155,7 @@
 
 <script setup lang="ts" name="Login">
 import { statesArray } from "@/assets/libs/states.js";
-import { register } from "@/api/mock/index";
+import { register, checkRegisterInfoReq } from "@/api/mock/index";
 import { showFailToast, showNotify } from "vant";
 import moment from "moment";
 const logoSrc = new URL("./assets/login.png", import.meta.url).href;
@@ -177,6 +183,7 @@ let stateShow = ref(false);
 let showPicker = ref(false);
 let passwordType = ref("password");
 let passwordIcon = ref("closed-eye");
+let registDisable = ref(true);
 const minDate = new Date(1900, 1, 1);
 const maxDate = new Date();
 const currentDate = ref(["1980", "1", "1"]);
@@ -202,13 +209,13 @@ const getUrlParam = function (name) {
 };
 
 const init = function () {
-  from.sponsorId = this.getUrlParam("sponsorId");
-  let shareId = this.getStore("shareId");
+  from.sponsorId = getUrlParam("sponsorId");
+  //let shareId = getStore("shareId"); TODO
   var param = {
-    sponsorId: this.from.sponsorId,
-    shareId: shareId
+    sponsorId: 1,
+    shareId: null
   };
-  this.checkRegisterInfo(param);
+  checkRegisterInfo(param);
   //通过 获取 shareId，通过这个能判断注册人是通过哪个人分享的文章注册的
 };
 
@@ -226,7 +233,7 @@ const onSubmit = function () {
       background: "#ffe1e1"
     });
   }
-  if (this.from.password < 8) {
+  if (from.password < 8) {
     showNotify({ type: "warning", message: "密码长度不能低于8" });
   }
   register(from).then(res => {
@@ -259,23 +266,15 @@ const vailEmail = function (email) {
 
 const checkRegisterInfo = function (param) {
   if (param.shareId == null && param.sponsorId == null) {
-    this.registDisable = true;
+    registDisable = true;
     return;
   }
-  // checkRegisterInfo(param).then(res => {
-  //   if (res.success) {
-  //     if (res.result.sponsorId) {
-  //       this.from.sponsorId = res.result.sponsorId;
-  //       this.from.sponsorCode = res.result.sponsorCode;
-  //       this.from.sponsorName = res.result.sponsorName;
-  //       this.registDisable = false;
-  //     } else {
-  //       this.registDisable = true;
-  //     }
-  //   } else {
-  //     this.registDisable = true;
-  //   }
-  // });
+  checkRegisterInfoReq(param).then(res => {
+    from.sponsorId = res.sponsorId;
+    from.sponsorCode = res.sponsorCode;
+    from.sponsorName = res.sponsorName;
+    registDisable = false;
+  });
 };
 
 const switchPasswordType = () => {
@@ -284,6 +283,8 @@ const switchPasswordType = () => {
     ? (passwordIcon = "closed-eye")
     : (passwordIcon = "eye");
 };
+
+init();
 </script>
 
 <style scoped lang="less"></style>
