@@ -48,6 +48,11 @@
             登录
           </van-button>
         </div>
+        <div style="margin: 16px">
+          <van-button round block type="primary" @click="toRegister">
+            注册
+          </van-button>
+        </div>
       </van-form>
     </div>
   </div>
@@ -55,6 +60,7 @@
 
 <script setup lang="ts" name="Login">
 import { initCaptcha, drawCodeImage } from "@/api/mock/index";
+const router = useRouter();
 const formData = ref({ email: "", password: "", imgCode: "" });
 const logoSrc = new URL("./assets/login.png", import.meta.url).href;
 const captchaImg = ref("");
@@ -69,6 +75,9 @@ const getCaptchaImg = () => {
   });
 };
 getCaptchaImg();
+const toRegister = () => {
+  router.push("/register");
+};
 </script>
 
 <style scoped lang="less"></style>
