@@ -18,28 +18,28 @@ const active = ref(0);
 const tabbarData = reactive([
   {
     icon: "wap-home-o",
-    title: "首页",
+    title: "Home",
     to: {
       name: "Home"
     }
   },
   {
     icon: "newspaper-o",
-    title: "项目",
+    title: "Product",
     to: {
       name: "Project"
     }
   },
   {
     icon: "shop-o",
-    title: "工具箱",
+    title: "Team",
     to: {
       name: "Tools"
     }
   },
   {
     icon: "user-o",
-    title: "我的",
+    title: "Profile",
     to: {
       name: "About"
     }

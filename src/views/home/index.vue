@@ -58,12 +58,11 @@ const imgArr = [
   "./assets/swiper6.jpg"
 ];
 const functionArr = [
-  { name: "关于AmCan", src: "./assets/about.png" },
-  { name: "产品中心", src: "./assets/product.png" },
-  { name: "新手入门", src: "./assets/newer.png" },
-  { name: "我的团队", src: "./assets/team.png" },
-  { name: "活动中心", src: "./assets/activity.png" },
-  { name: "工具箱", src: "./assets/tool.png" }
+  { name: "News", src: "./assets/product.png" },
+  { name: "My Team", src: "./assets/team.png" },
+  { name: "Products", src: "./assets/product.png" },
+  { name: "Abount Us", src: "./assets/about.png" },
+  { name: "Contact Us", src: "./assets/tool.png" }
 ];
 const imgSrc = imgArr.map(item => {
   return new URL(item, import.meta.url).href;

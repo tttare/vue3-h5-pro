@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "Home",
         component: Home,
         meta: {
-          title: "首页"
+          title: "Home"
         }
       },
       {
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "Project",
         component: () => import("@/views/project/index.vue"),
         meta: {
-          title: "项目"
+          title: "Project"
         }
       },
       {
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "Tools",
         component: () => import("@/views/tools/index.vue"),
         meta: {
-          title: "工具箱"
+          title: "Tools"
         }
       },
       {
@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "About",
         component: () => import("@/views/about/index.vue"),
         meta: {
-          title: "我的",
+          title: "Profile",
           noCache: true
         }
       }
@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "Login",
     component: () => import("@/views/login/index.vue"),
     meta: {
-      title: "登录"
+      title: "Login"
     }
   },
   {
@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "Register",
     component: () => import("@/views/register/index.vue"),
     meta: {
-      title: "登录"
+      title: "Register"
     }
   }
 ];
