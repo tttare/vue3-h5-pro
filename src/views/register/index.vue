@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex items-center">
+  <div class="h-full p-[10px]">
     <div>
       <div class="h-[100px] flex justify-center items-center">
         <img :src="logoSrc" alt="avatar" class="w-[90px] h-[90px]" />
@@ -37,20 +37,19 @@
           required
           :rules="[{ required: true, message: '请填写手机号' }]"
         />
-        <br />
-        <van-radio-group
-          v-model="from.sex"
-          label="Gender"
-          title="Gender"
-          direction="horizontal"
-          required
-          :rules="[{ required: true, message: '请选择性别' }]"
-        >
-          <van-radio name="0">female</van-radio>
-          <van-radio name="1">male</van-radio>
-        </van-radio-group>
-        <br />
-
+        <div class="py-[10px] pl-[15px]">
+          <van-radio-group
+            v-model="from.sex"
+            label="Gender"
+            title="Gender"
+            direction="horizontal"
+            required
+            :rules="[{ required: true, message: '请选择性别' }]"
+          >
+            <van-radio name="0">female</van-radio>
+            <van-radio name="1">male</van-radio>
+          </van-radio-group>
+        </div>
         <van-field
           readonly
           required
@@ -80,7 +79,7 @@
           label="State"
           left-icon="location-o"
           placeholder="Choose your state"
-          :value="from.stateText"
+          :modelValue="from.stateText"
           required
           :rules="[{ required: true, message: '请选择所在州' }]"
           @click="stateShow = true"
@@ -142,14 +141,14 @@
           </van-button>
         </div>
       </van-form>
-      <div class="more-wrap">
+      <div class="text-[#1989fa]">
         <router-link class="link" to="/login">Log in</router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts" name="Login">
+<script setup lang="ts" name="Register">
 import { statesArray } from "@/assets/libs/states.js";
 import { register, checkRegisterInfoReq } from "@/api/mock/index";
 import { FieldType, showFailToast, showNotify } from "vant";
@@ -186,8 +185,8 @@ const maxDate = new Date();
 const currentDate = ref(["1980", "1", "1"]);
 
 const stateConfirm = (value, index) => {
-  from.value.stateText = value;
-  from.value.state = statesArray[index]["value"];
+  from.value.stateText = value.selectedValues[0];
+  from.value.state = statesArray[value.selectedIndexes[0]]["value"];
   stateShow.value = false;
 };
 const dateConfirm = date => {
