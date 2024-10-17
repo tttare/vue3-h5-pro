@@ -2,7 +2,7 @@
   <div class="h-full flex items-center">
     <div>
       <div class="h-[100px] flex justify-center items-center">
-        <img :src="logoSrc" alt="avatar" class="w-[240px] h-[90px]" />
+        <img :src="logoSrc" alt="avatar" class="w-[90px] h-[90px]" />
       </div>
       <van-form @submit="onSubmit">
         <van-cell-group inset>
@@ -62,7 +62,7 @@
 import { initCaptcha, drawCodeImage } from "@/api/mock/index";
 const router = useRouter();
 const formData = ref({ email: "", password: "", imgCode: "" });
-const logoSrc = new URL("./assets/login.png", import.meta.url).href;
+const logoSrc = new URL("./assets/registerlogo.png", import.meta.url).href;
 const captchaImg = ref("");
 const captchaId = ref("");
 const onSubmit = () => {};

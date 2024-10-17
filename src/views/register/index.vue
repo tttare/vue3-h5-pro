@@ -2,7 +2,7 @@
   <div class="h-full flex items-center">
     <div>
       <div class="h-[100px] flex justify-center items-center">
-        <img :src="logoSrc" alt="avatar" class="w-[240px] h-[90px]" />
+        <img :src="logoSrc" alt="avatar" class="w-[90px] h-[90px]" />
       </div>
       <van-form @submit="onSubmit">
         <van-field
@@ -154,7 +154,7 @@ import { statesArray } from "@/assets/libs/states.js";
 import { register, checkRegisterInfoReq } from "@/api/mock/index";
 import { FieldType, showFailToast, showNotify } from "vant";
 import moment from "moment";
-const logoSrc = new URL("./assets/login.png", import.meta.url).href;
+const logoSrc = new URL("./assets/registerlogo.png", import.meta.url).href;
 const from = ref({
   nickname: null,
   username: null,
