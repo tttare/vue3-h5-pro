@@ -148,7 +148,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="Login">
+<script setup lang="ts" name="Register">
 import { statesArray } from "@/assets/libs/states.js";
 import { register, checkRegisterInfoReq } from "@/api/mock/index";
 import { FieldType, showFailToast, showNotify } from "vant";
