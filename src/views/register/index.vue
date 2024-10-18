@@ -19,7 +19,7 @@
           label="Name"
           left-icon="manager-o"
           required
-          :rules="[{ required: true, message: '请填写姓名' }]"
+          :rules="[{ required: true, message: 'Please fill in your name' }]"
         />
         <van-field
           v-model="from.username"
@@ -27,7 +27,9 @@
           label="Email"
           left-icon="envelop-o"
           required
-          :rules="[{ required: true, message: '请填写邮箱' }]"
+          :rules="[
+            { required: true, message: 'Please fill in your email address' }
+          ]"
         />
         <van-field
           v-model="from.mobilePhone"
@@ -35,7 +37,9 @@
           label="Phone"
           left-icon="phone-o"
           required
-          :rules="[{ required: true, message: '请填写手机号' }]"
+          :rules="[
+            { required: true, message: 'Please fill in your phone number' }
+          ]"
         />
         <div class="py-[10px] pl-[15px]">
           <van-radio-group
@@ -44,7 +48,7 @@
             title="Gender"
             direction="horizontal"
             required
-            :rules="[{ required: true, message: '请选择性别' }]"
+            :rules="[{ required: true, message: 'Please select your gender' }]"
           >
             <van-radio name="0">female</van-radio>
             <van-radio name="1">male</van-radio>
@@ -57,7 +61,7 @@
           label="Brithday"
           placeholder="Please select your birthday"
           :modelValue="from.birthday"
-          :rules="[{ required: true, message: '请选择生日' }]"
+          :rules="[{ required: true, message: 'Please select your birthday' }]"
           @click="showPicker = true"
         />
         <van-popup v-model:show="showPicker" position="bottom">
@@ -81,7 +85,7 @@
           placeholder="Choose your state"
           :modelValue="from.stateText"
           required
-          :rules="[{ required: true, message: '请选择所在州' }]"
+          :rules="[{ required: true, message: 'Please select your state' }]"
           @click="stateShow = true"
         />
         <van-popup v-model:show="stateShow" position="bottom">
@@ -113,6 +117,7 @@
           left-icon="lock"
           :type="passwordType"
           required
+          :rules="[{ required: true, message: 'Please fill in your password' }]"
         >
           <template v-slot:right-icon>
             <van-icon :name="passwordIcon" @click="switchPasswordType" />
@@ -124,6 +129,7 @@
           left-icon="lock"
           :type="passwordType"
           required
+          :rules="[{ required: true, message: 'Please fill in your password' }]"
         >
           <template v-slot:right-icon>
             <van-icon :name="passwordIcon" @click="switchPasswordType" />
@@ -183,7 +189,7 @@ let registDisable = ref(true);
 const minDate = new Date(1900, 1, 1);
 const maxDate = new Date();
 const currentDate = ref(["1980", "1", "1"]);
-
+const router = useRouter();
 const stateConfirm = (value, index) => {
   from.value.stateText = value.selectedValues[0];
   from.value.state = statesArray[value.selectedIndexes[0]]["value"];
@@ -232,15 +238,21 @@ const onSubmit = function () {
     });
   }
   if (from.value.password < 8) {
-    showNotify({ type: "warning", message: "密码长度不能低于8" });
+    showNotify({
+      type: "warning",
+      message: "密码长度不能低于8",
+      color: "#ad0000",
+      background: "#ffe1e1"
+    });
   }
-  register(from).then(res => {
-    console.log("res=>" + res);
-    if (res.success) {
-      showNotify({ type: "success", message: "注册成功" });
-    } else {
-      showFailToast(res.message);
-    }
+  register(from.value).then(res => {
+    showNotify({
+      type: "success",
+      message: "SUCCESS",
+      background: "#e5f7e7",
+      color: "#6dc453"
+    });
+    router.push("/register");
   });
 };
 
@@ -248,7 +260,7 @@ const vailEmail = function (email) {
   if (email == null || email.trim() == "") {
     showNotify({
       type: "warning",
-      message: "请填写邮箱",
+      message: "Email cannot be empty",
       color: "#ad0000",
       background: "#ffe1e1"
     });
@@ -256,7 +268,12 @@ const vailEmail = function (email) {
   }
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!regex.test(email)) {
-    showNotify({ type: "warning", message: "邮箱格式不正确" });
+    showNotify({
+      type: "warning",
+      message: "Email format incorrect",
+      color: "#ad0000",
+      background: "#ffe1e1"
+    });
     return false;
   }
   return true;

@@ -7,27 +7,31 @@
       <van-form @submit="onSubmit">
         <van-cell-group inset>
           <van-field
-            v-model="formData.email"
-            name="邮箱"
-            placeholder="请填写邮箱"
+            v-model="formData.username"
+            name="Email"
+            placeholder="Email"
             required
             left-icon="envelop-o"
-            :rules="[{ required: true, message: '请填写邮箱' }]"
+            :rules="[
+              { required: true, message: 'Please fill in your email address' }
+            ]"
           />
           <van-field
             v-model="formData.password"
             type="password"
-            name="密码"
-            placeholder="请填写密码"
+            name="Password"
+            placeholder="Password"
             required
             left-icon="lock"
-            :rules="[{ required: true, message: '请填写密码' }]"
+            :rules="[
+              { required: true, message: 'Please fill in your email password' }
+            ]"
           />
           <van-row type="flex">
             <van-col span="16">
               <van-field
-                v-model="formData.imgCode"
-                placeholder="请填写验证码"
+                v-model="formData.code"
+                placeholder="Verification Code"
                 left-icon="envelop-o"
                 required
                 use-button-slot
@@ -45,32 +49,38 @@
         </van-cell-group>
         <div style="margin: 16px">
           <van-button round block type="primary" native-type="submit">
-            登录
+            Login
           </van-button>
         </div>
-        <div style="margin: 16px">
+        <!-- <div style="margin: 16px">
           <van-button round block type="primary" @click="toRegister">
             注册
           </van-button>
-        </div>
+        </div> -->
       </van-form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="Login">
-import { initCaptcha, drawCodeImage } from "@/api/mock/index";
+import { initCaptcha, drawCodeImage, login } from "@/api/mock/index";
 const router = useRouter();
-const formData = ref({ email: "", password: "", imgCode: "" });
+const formData = ref({ username: "", password: "", code: "", captchaId: "" });
 const logoSrc = new URL("./assets/registerlogo.png", import.meta.url).href;
 const captchaImg = ref("");
 const captchaId = ref("");
-const onSubmit = () => {};
+const onSubmit = () => {
+  formData.value.captchaId = captchaId.value;
+  login(formData.value).then(res => {
+    console.log(res);
+  });
+};
 const getCaptchaImg = () => {
   initCaptcha().then(res => {
     if (res) {
       captchaId.value = res;
       captchaImg.value = drawCodeImage + captchaId.value;
+      router.push("/home");
     }
   });
 };

@@ -28,6 +28,10 @@ export function initCaptcha(): Promise<any> {
   return http.request({ url: "/aeconn/common/captcha/init", method: "get" });
 }
 
+export const login = (data) => {
+  return http.request({ url: "/aeconn/login", method: "post" , data});
+}
+
 
 export function register(data?: object): Promise<any> {
   return http.request({ url: "/aeconn/user/register", method: "post" , data});
