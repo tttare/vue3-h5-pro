@@ -40,3 +40,7 @@ export function register(data?: object): Promise<any> {
 export function checkRegisterInfoReq(data?: object): Promise<any> {
   return http.request({ url: "/aeconn/user/checkRegisterInfo", method: "post" , data});
 }
+
+export function profile(): Promise<any> {
+  return http.request({ url: "/aeconn/app/user/profile", method: "get"});
+}

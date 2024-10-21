@@ -3,10 +3,10 @@
     <div class="header">
       <div class="z-10">
         <div class="w-[78px] h-[78px] rounded-full mx-auto" @click="toLogin">
-          <img :src="avatarSrc" class="w-full h-full" />
+          <img :src="userForm.avatar" class="w-full h-full" />
         </div>
         <div class="text-[22px] font-semibold text-[#fff] pt-[15px] pb-[8px]">
-          {{ userName }}
+          {{ userForm.displayName }}
         </div>
       </div>
       <div class="absolute bottom-0 left-0 top-0 right-0">
@@ -40,15 +40,16 @@
           ></van-cell>
         </van-cell-group>
       </div>
-      <div>
+      <!-- <div>
         <van-cell-group inset>
           <van-cell title="用户协议" icon="description-o" is-link></van-cell
         ></van-cell-group>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script setup lang="ts" name="About">
+import { profile } from "@/api/mock/index";
 type BriefItem = {
   value: any;
   text: string;
@@ -57,29 +58,45 @@ const router = useRouter();
 const bgSrc = new URL("./assets/bg.png", import.meta.url).href;
 const avatarSrc = new URL("./assets/avatar.png", import.meta.url).href;
 const userName = ref<string>("点击登录");
+const userForm = ref({
+  avatar: new URL("./assets/avatar.png", import.meta.url).href,
+  username: "Login",
+  nickname: "Login",
+  level: ""
+});
 const briefList = ref<BriefItem[]>([
   {
     value: new URL("./assets/qrcode.png", import.meta.url).href,
-    text: "我的二维码"
+    text: "QR Code"
   },
   {
     value: 0,
-    text: "团队"
+    text: "Team"
   },
   {
     value: 0,
-    text: "积分余额"
+    text: "Commission"
   }
 ]);
 const toolList = [
-  { name: "我的客户订单进度", icon: "description-o" },
-  { name: "我的收藏", icon: "like-o" },
-  { name: "专属客服", icon: "phone-o" },
-  { name: "设置", icon: "setting-o" }
+  { name: "Profile", icon: "description-o" },
+  { name: "My Favorite", icon: "like-o" },
+  { name: "My Order", icon: "phone-o" },
+  { name: "Privacy Policy", icon: "setting-o" }
 ];
 const toLogin = () => {
-  router.push("/login");
+  if (!sessionStorage.getItem("accessToken")) {
+    //如果已登录就不用去登录
+    router.push("/login");
+  }
 };
+
+const userDetail = () => {
+  profile().then(res => {
+    userForm.value = res;
+  });
+};
+userDetail();
 </script>
 <style scoped lang="less">
 .header {

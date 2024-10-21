@@ -31,9 +31,10 @@ class Http {
       config => {
         NProgress.start();
         // 发送请求前，可在此携带 token
-        // if (token) {
-        //   config.headers['token'] = token
-        // }
+        let accessToken = sessionStorage.getItem('accessToken');
+        if (accessToken) {
+          config.headers['accessToken'] = accessToken
+        }
         return config;
       },
       (error: AxiosError) => {

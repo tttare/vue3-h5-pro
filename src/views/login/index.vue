@@ -72,7 +72,8 @@ const captchaId = ref("");
 const onSubmit = () => {
   formData.value.captchaId = captchaId.value;
   login(formData.value).then(res => {
-    console.log(res);
+    sessionStorage.setItem("accessToken", res.toString());
+    router.push("/home");
   });
 };
 const getCaptchaImg = () => {
@@ -80,7 +81,6 @@ const getCaptchaImg = () => {
     if (res) {
       captchaId.value = res;
       captchaImg.value = drawCodeImage + captchaId.value;
-      router.push("/home");
     }
   });
 };
