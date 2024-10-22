@@ -50,8 +50,11 @@
         ></van-cell-group>
       </div> -->
     </div>
-    <van-dialog v-model:show="show" confirmButtonText="关闭">
-      <img src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg" />
+    <van-dialog v-model:show="show" title="我的二维码" confirmButtonText="关闭">
+      <div class="border border-[#ebedf0] rounded-[2px] mb-[20px]">
+        <vue-qrcode :value="qrcodeUrl"></vue-qrcode>
+      </div>
+      <div class="text-[#979696]">扫描二维码成为独立经纪人</div>
     </van-dialog>
   </div>
 </template>
@@ -93,6 +96,7 @@ const toolList = [
   { name: "Privacy Policy", icon: "setting-o" }
 ];
 const show = ref(false);
+const qrcodeUrl = ref("https://www.baidu.com");
 const toLogin = () => {
   if (!sessionStorage.getItem("accessToken")) {
     //如果已登录就不用去登录
@@ -122,6 +126,10 @@ userDetail();
 }
 :deep(.van-dialog) {
   .van-dialog__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
   }
 }
