@@ -23,7 +23,11 @@
           class="flex flex-col justify-between"
         >
           <div v-if="index === 0">
-            <img :src="item.value" class="w-[28px] h-[28px] mx-auto" />
+            <img
+              :src="item.value"
+              class="w-[28px] h-[28px] mx-auto"
+              @click="show = true"
+            />
           </div>
           <div v-else class="text-[20px] text-center">{{ item.value }}</div>
           <div class="pt-[8px] text-[12px]">{{ item.text }}</div>
@@ -46,6 +50,9 @@
         ></van-cell-group>
       </div> -->
     </div>
+    <van-dialog v-model:show="show" confirmButtonText="关闭">
+      <img src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg" />
+    </van-dialog>
   </div>
 </template>
 <script setup lang="ts" name="About">
@@ -62,7 +69,8 @@ const userForm = ref({
   avatar: new URL("./assets/avatar.png", import.meta.url).href,
   username: "Login",
   nickname: "Login",
-  level: ""
+  level: "",
+  displayName: ""
 });
 const briefList = ref<BriefItem[]>([
   {
@@ -84,6 +92,7 @@ const toolList = [
   { name: "My Order", icon: "phone-o" },
   { name: "Privacy Policy", icon: "setting-o" }
 ];
+const show = ref(false);
 const toLogin = () => {
   if (!sessionStorage.getItem("accessToken")) {
     //如果已登录就不用去登录
@@ -110,5 +119,10 @@ userDetail();
 }
 .van-cell-group--inset {
   margin: 0;
+}
+:deep(.van-dialog) {
+  .van-dialog__content {
+    padding: 10px;
+  }
 }
 </style>

@@ -18,7 +18,14 @@
     <div>
       <van-swipe autoplay="3000" indicator-color="white">
         <van-swipe-item v-for="(item, index) in swiperList" :key="index">
-          <img :src="item" class="w-full rounded-[10px] h-[232px]" />
+          <div class="relative">
+            <img :src="item.src" class="w-full rounded-[10px] h-[232px]" />
+            <div
+              class="w-full absolute bottom-[20px] text-[#fff] text-center text-[18px] font-semibold"
+            >
+              {{ item.title }}
+            </div>
+          </div>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -32,7 +39,7 @@
           :src="item.src"
           class="rounded-[8px] w-[64px] h-[64px] mx-auto mb-[10px]"
         />
-        <div class="text-center font-semibold">{{ item.name }}</div>
+        <div class="text-center font-semibold">{{ item.title }}</div>
       </div>
     </div>
     <div><img :src="homeBackground" class="rounded-[10px]" /></div>
@@ -41,36 +48,36 @@
 
 <script setup lang="ts" name="Home">
 type FunctionItem = {
-  name: string;
+  title: string;
   src: string;
 };
-const swiperList = ref<string[]>([]);
+const swiperList = ref<FunctionItem[]>([]);
 const functionList = ref<FunctionItem[]>([]);
 let homeBackground = ref<string>("");
 let logoSrc = ref<string>("");
 const imgArr = [
-  "./assets/swiper7.jpg",
-  "./assets/swiper1.jpg",
-  "./assets/swiper2.jpg",
-  "./assets/swiper3.jpg",
-  "./assets/swiper4.jpg",
-  "./assets/swiper5.jpg",
-  "./assets/swiper6.jpg"
+  { title: "News", src: "./assets/swiper7.jpg" },
+  { title: "My Team", src: "./assets/swiper1.jpg" },
+  { title: "Products", src: "./assets/swiper2.jpg" },
+  { title: "Abount Us", src: "./assets/swiper3.jpg" },
+  { title: "Contact Us", src: "./assets/swiper4.jpg" },
+  { title: "Contact Us", src: "./assets/swiper5.jpg" },
+  { title: "Contact Us", src: "./assets/swiper6.jpg" }
 ];
 const functionArr = [
-  { name: "News", src: "./assets/product.png" },
-  { name: "My Team", src: "./assets/team.png" },
-  { name: "Products", src: "./assets/product.png" },
-  { name: "Abount Us", src: "./assets/about.png" },
-  { name: "Contact Us", src: "./assets/tool.png" }
+  { title: "News", src: "./assets/product.png" },
+  { title: "My Team", src: "./assets/team.png" },
+  { title: "Products", src: "./assets/product.png" },
+  { title: "Abount Us", src: "./assets/about.png" },
+  { title: "Contact Us", src: "./assets/tool.png" }
 ];
-const imgSrc = imgArr.map(item => {
-  return new URL(item, import.meta.url).href;
+imgArr.forEach(item => {
+  item.src = new URL(item.src, import.meta.url).href;
 });
 functionArr.forEach(item => {
   item.src = new URL(item.src, import.meta.url).href;
 });
-swiperList.value = imgSrc;
+swiperList.value = imgArr;
 functionList.value = functionArr;
 homeBackground.value = new URL("./assets/bg.jpg", import.meta.url).href;
 logoSrc.value = new URL("./assets/logo.png", import.meta.url).href;
